@@ -1,15 +1,18 @@
-import Button from '@mui/material/Button';
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Layout from './Layout';
+import User from './components/User';
 
 function App() {
 
   return (
-    <>
-      <div>
-      </div>
-      <h1>Vite + React</h1>
-      <Button variant="contained">Hello world</Button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route path="/user" element={<User />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
