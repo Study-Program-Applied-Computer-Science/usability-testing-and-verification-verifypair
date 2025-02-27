@@ -24,7 +24,7 @@ const Register = () => {
         <div className="mb-3">
           <input
             type="text"
-            className="form-control"
+            className="form-control w-25 mx-auto"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -34,7 +34,7 @@ const Register = () => {
         <div className="mb-3">
           <input
             type="password"
-            className="form-control"
+            className="form-control w-25 mx-auto"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
