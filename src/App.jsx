@@ -1,18 +1,22 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Answer from './components/Answer';
 
 import Layout from './Layout';
-import User from './components/User';
 
 function App() {
 
   return (
+
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route path="/user" element={<User />} />
-      </Routes>
-    </BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<>TEst</>} />
+          <Route path="/answer" element={<Answer />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter >
+
   )
 }
 
