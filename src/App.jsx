@@ -1,19 +1,22 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
-import QuestionsList from './components/QuestionsList';
+import Answer from './components/Answer';
+
+import Layout from './Layout';
 
 function App() {
 
   return (
+
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/questions" element={<QuestionsList />} />
-      </Routes>
-    </BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<>TEst</>} />
+          <Route path="/answer" element={<Answer />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter >
+
   )
 }
 
