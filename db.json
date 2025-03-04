@@ -1,0 +1,61 @@
+{
+    "user": {
+        "username": "johndoe",
+        "password": "securepassword",
+        "contribution": {
+            "questionsAsked": 3,
+            "answersGiven": 5,
+            "upvotesReceived": 20
+        },
+        "favorite": [
+            {
+                "questionId": 1,
+                "questionTitle": "How to integrate React with json-server?"
+            },
+            {
+                "questionId": 3,
+                "questionTitle": "Best practices for unit testing with Jest"
+            }
+        ]
+    },
+    "question": [
+        {
+            "id": 1,
+            "question_title": "How to integrate React with json-server?",
+            "question_description": "I am trying to set up a basic back-end using json-server for a React project. Any tips on integration?",
+            "answers": [
+                {
+                    "id": 1,
+                    "answer": "You can start by setting up json-server with a db.json file and then use fetch or axios in your React app to call the endpoints.",
+                    "vote": {
+                        "upvote": 8,
+                        "downvote": 0
+                    }
+                },
+                {
+                    "id": 2,
+                    "answer": "Consider using a proxy in your React development environment to avoid CORS issues when connecting to json-server.",
+                    "vote": {
+                        "upvote": 5,
+                        "downvote": 1
+                    }
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "question_title": "Best practices for testing React components with Jest",
+            "question_description": "What are some common patterns for testing component rendering and interactions with Jest and Cypress?",
+            "answers": [
+                {
+                    "id": 1,
+                    "answer": "You can use Jest's snapshot testing for component rendering and combine it with Cypress for end-to-end testing of user interactions.",
+                    "vote": {
+                        "upvote": 12,
+                        "downvote": 0
+                    }
+                }
+            ]
+        }
+    ]
+}
