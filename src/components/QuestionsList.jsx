@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { QuestionsContext } from './QuestionsContext';
 
@@ -22,9 +22,9 @@ const QuestionsList = () => {
             {questions.map((question) => (
                 <div key={question.id} className="card mt-3">
                     <div className="card-body">
-                        <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.title}</h4>
+                        <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.question_title}</h4>
                         <p className="card-text" style={{ textAlign: 'justify' }}>
-                            {question.description}
+                            {question.question_description}
                         </p>
                     </div>
                 </div>

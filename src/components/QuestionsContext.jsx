@@ -1,31 +1,30 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const QuestionsContext = createContext();
 
 export const QuestionsProvider = ({ children }) => {
-    const [questions, setQuestions] = useState([
-        {
-            id: 1,
-            title: 'How do I set up a React project?',
-            description: 'I am looking for guidance on setting up a new React project from scratch, including best practices for file structure and dependencies.',
-            vote: { upvote: 8, downvote: 0 }
-        },
-        {
-            id: 2,
-            title: 'What is the difference between props and state?',
-            description: 'I would like to understand how props and state differ and when to use each in a React component.',
-            vote: { upvote: 5, downvote: 1 }
-        },
-        {
-            id: 3,
-            title: 'How do I manage side effects in React?',
-            description: 'Could someone explain how to handle side effects in React applications, perhaps using hooks like useEffect?',
-            vote: { upvote: 3, downvote: 0 }
-        }
-    ]);
+    const [questions, setQuestions] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/question')
+            .then((res) => res.json())
+            .then((data) => setQuestions(data))
+            .catch((err) => console.error('Error fetching questions:', err));
+    }, []);
 
     const addQuestion = (newQuestion) => {
-        setQuestions((prev) => [newQuestion, ...prev]);
+        fetch('http://localhost:3001/question', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newQuestion)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setQuestions((prev) => [data, ...prev]);
+            })
+            .catch((err) => console.error('Error adding question:', err));
     };
 
     return (

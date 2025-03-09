@@ -14,9 +14,10 @@ const QuestionForm = () => {
 
         const newQuestion = {
             id: Date.now(),
-            title,
-            description,
-            vote: { upvote: 0, downvote: 0 }
+            question_title:title,
+            question_description: description,
+            vote: { upvote: 0, downvote: 0 },
+            answers: [],
         };
 
         addQuestion(newQuestion);
