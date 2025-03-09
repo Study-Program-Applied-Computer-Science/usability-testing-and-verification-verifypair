@@ -1,19 +1,38 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from './UserContext';
 
 const Register = () => {
+  const { register } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setErrorMsg('Please fill in both username and password.');
       return;
     }
+    if (!isValidEmail(username)) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+    if (password.length < 8) {
+      setErrorMsg('Password must be at least 8 characters long.');
+      return;
+    }
+
     setErrorMsg('');
-    console.log('Registering user:', username, password);
+    const result = await register(username, password);
+    if (result.success) {
+      navigate('/login');
+    } else {
+      setErrorMsg(result.message);
+    }
   };
 
   return (

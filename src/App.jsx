@@ -6,12 +6,14 @@ import Login from './components/Login';
 import Register from './components/Register';
 import QuestionForm from './components/QuestionForm';
 import { QuestionsProvider } from './components/QuestionsContext';
+import { UserProvider } from './components/UserContext';
 
 import Layout from './Layout';
 
 function App() {
 
   return (
+    <UserProvider>
     <QuestionsProvider>
       <BrowserRouter>
         <Layout>
@@ -26,6 +28,7 @@ function App() {
         </Layout>
       </BrowserRouter >
     </QuestionsProvider>
+    </UserProvider>
   )
 }
 
