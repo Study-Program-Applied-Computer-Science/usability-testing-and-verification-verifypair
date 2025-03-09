@@ -8,7 +8,8 @@ const Header = () => {
                 <a className="navbar-brand" href="#">VerifyPair</a>
                 <div className="d-flex" style={{ width: '20%', color: "white" }} id="navbarNav">
                     <Link className="nav-link" to="/" style={{ paddingRight: "10px" }}><p style={{ margin: 0 }}> Home </p></Link>
-                    <Link className="nav-link" to="/answer"><p style={{ margin: 0 }}> Answers </p></Link>
+                    <Link className="nav-link" to="/answer" style={{ paddingRight: "10px" }}><p style={{ margin: 0 }}> Answers </p></Link>
+                    <Link className="nav-link" to="/login"><p style={{ margin: 0 }}> Login </p></Link>
                 </div>
             </div>
         </nav>
