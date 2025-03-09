@@ -19,7 +19,7 @@ const Login = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Login</h2>
+      <h2 className="mb-4 justify-content-between">Login</h2>
       {errorMsg && <p className="text-danger">{errorMsg}</p>}
       <form onSubmit={handleSubmit} data-testid="login-form">
         <div className="mb-3">

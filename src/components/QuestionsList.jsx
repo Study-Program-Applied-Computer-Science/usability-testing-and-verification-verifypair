@@ -1,24 +1,36 @@
-import Header from "./Header";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { QuestionsContext } from './QuestionsContext';
 
 const QuestionsList = () => {
-  const questions = [
-    { id: 1, title: "What is React?"},
-    { id: 2, title: "How does Vite work?" },
-    { id: 3, title: "What is JSX?"}
-  ];
+  const { questions } = useContext(QuestionsContext);
+  const navigate = useNavigate();
+
+  const formRedirect = () => {
+    navigate('/ask');
+  };
 
   return (
-    <div className="container mt-5">
-      <Header />
-      <h2>Questions List</h2>
-      <ul className="list-group">
-        {questions.map((question) => (
-          <li key={question.id} className="list-group-item">
-            <h5>{question.title}</h5>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="container mt-4" style={{ maxWidth: '800px' }}>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2>Questions List</h2>
+                <button onClick={formRedirect} className="btn btn-primary">
+                    Ask a Question
+                </button>
+            </div>
+            {questions.map((question) => (
+                <div key={question.id} className="card mt-3">
+                    <div className="card-body">
+                        <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.title}</h4>
+                        <p className="card-text" style={{ textAlign: 'justify' }}>
+                            {question.description}
+                        </p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </>
   );
 };
 
