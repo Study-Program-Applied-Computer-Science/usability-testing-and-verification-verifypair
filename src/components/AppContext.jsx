@@ -1,9 +1,34 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
-export const UserContext = createContext();
+export const AppContext = createContext();
 
-export const UserProvider = ({ children }) => {
+export const AppProvider = ({ children }) => {
+
+  const [questions, setQuestions] = useState([]);
+  
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/question')
+      .then((res) => res.json())
+      .then((data) => setQuestions(data))
+      .catch((err) => console.error('Error fetching questions:', err));
+  }, []);
+
+  const addQuestion = (newQuestion) => {
+    fetch('http://localhost:3001/question', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuestion)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestions((prev) => [data, ...prev]);
+      })
+      .catch((err) => console.error('Error adding question:', err));
+  };
 
   const login = (username, password) => {
     return fetch('http://localhost:3001/user')
@@ -57,8 +82,17 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, register, logout }}>
+    <AppContext.Provider
+      value={{
+        questions,
+        addQuestion,
+        user,
+        login,
+        register,
+        logout
+      }}
+    >
       {children}
-    </UserContext.Provider>
+    </AppContext.Provider>
   );
 };

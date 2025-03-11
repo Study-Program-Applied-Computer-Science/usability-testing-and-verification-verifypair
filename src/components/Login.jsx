@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from './UserContext';
+import { AppContext } from './AppContext';
 
 const Login = () => {
-  const { login } = useContext(UserContext);
+  const { login } = useContext(AppContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');

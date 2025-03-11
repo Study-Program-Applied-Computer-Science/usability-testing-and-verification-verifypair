@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { QuestionsContext } from './QuestionsContext';
+import { AppContext } from './AppContext';
 
 const QuestionsList = () => {
-  const { questions } = useContext(QuestionsContext);
+  const { questions } = useContext(AppContext);
   const navigate = useNavigate();
 
   const formRedirect = () => {
