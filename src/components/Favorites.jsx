@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { QuestionsContext } from "./QuestionsContext";
 
 function Favorites() {
+  const { questions } = useContext(QuestionsContext); // ✅ Fetch questions from context
   const [favorites, setFavorites] = useState([]);
 
   // Load favorites from localStorage
@@ -20,17 +22,32 @@ function Favorites() {
     });
   };
 
-  return (
-    <div>
-      <h2>Bookmarked Questions</h2>
-      {favorites.length > 0 ? (
-        favorites.map((id) => <p key={id}>Question {id}</p>)
-      ) : (
-        <p>No bookmarks yet.</p>
-      )}
+  // Filter only favorited questions
+  const favoriteQuestions = questions.filter(q => favorites.includes(q.id));
 
-      {/* Example Button to toggle Favorite (Heres where I replace "toggleFavorite(1)" with the actual question id) */}
-      <button onClick={() => toggleFavorite(1)}>Toggle Favorite for Q1</button>
+  return (
+    <div className="container mt-4">
+      <h2>Bookmarked Questions</h2>
+      {favoriteQuestions.length > 0 ? (
+        favoriteQuestions.map((q) => (
+          <div key={q.id} className="card mt-3">
+            <div className="card-body">
+              <h4 className="card-title">{q.question_title}</h4>
+              <p className="card-text">{q.question_description}</p>
+              
+              {/* Unfavorite Button */}
+              <button 
+                className="btn btn-outline-danger"
+                onClick={() => toggleFavorite(q.id)}
+              >
+                ⭐ Unfavorite
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No bookmarked questions yet.</p>
+      )}
     </div>
   );
 }

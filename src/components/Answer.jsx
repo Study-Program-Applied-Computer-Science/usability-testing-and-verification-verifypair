@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
+import { getBadge } from './BadgeReputation'; // ✅ Import the badge function
 
 const Answer = () => {
     const [content, setContent] = useState('');
@@ -8,6 +7,7 @@ const Answer = () => {
     const temp = [
         {
             "id": 1,
+            "username": "Alice",
             "answer": "You can start by setting up json-server with a db.json file and then use fetch or axios in your React app to call the endpoints.",
             "vote": {
                 "upvote": 8,
@@ -16,14 +16,14 @@ const Answer = () => {
         },
         {
             "id": 2,
+            "username": "Bob",
             "answer": "Consider using a proxy in your React development environment to avoid CORS issues when connecting to json-server.",
             "vote": {
                 "upvote": 5,
                 "downvote": 1
             }
         }
-    ]
-
+    ];
 
     const [answers, setAnswers] = useState(temp);
 
@@ -50,6 +50,10 @@ const Answer = () => {
                     return (
                         <div className="card mt-4" key={item.id}>
                             <div className="card-body">
+                                {/* Display username with badge */}
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <h5>{item.username} <span className="badge bg-secondary">{getBadge(item.vote.upvote)}</span></h5>
+                                </div>
                                 <p>{item.answer}</p>
                                 <div className="d-flex justify-content-end">
                                     <div>
