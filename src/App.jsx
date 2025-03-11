@@ -5,14 +5,14 @@ import QuestionsList from './components/QuestionsList';
 import Login from './components/Login';
 import Register from './components/Register';
 import QuestionForm from './components/QuestionForm';
-import { QuestionsProvider } from './components/QuestionsContext';
+import { AppProvider } from './components/AppContext';
 
 import Layout from './Layout';
 
 function App() {
 
   return (
-    <QuestionsProvider>
+    <AppProvider>
       <BrowserRouter>
         <Layout>
           <Routes>
@@ -25,7 +25,7 @@ function App() {
           </Routes>
         </Layout>
       </BrowserRouter >
-    </QuestionsProvider>
+    </AppProvider>
   )
 }
 

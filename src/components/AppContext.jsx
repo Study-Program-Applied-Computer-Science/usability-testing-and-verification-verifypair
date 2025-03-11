@@ -1,0 +1,98 @@
+import { createContext, useState, useEffect } from 'react';
+
+export const AppContext = createContext();
+
+export const AppProvider = ({ children }) => {
+
+  const [questions, setQuestions] = useState([]);
+  
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/question')
+      .then((res) => res.json())
+      .then((data) => setQuestions(data))
+      .catch((err) => console.error('Error fetching questions:', err));
+  }, []);
+
+  const addQuestion = (newQuestion) => {
+    fetch('http://localhost:3001/question', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newQuestion)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestions((prev) => [data, ...prev]);
+      })
+      .catch((err) => console.error('Error adding question:', err));
+  };
+
+  const login = (username, password) => {
+    return fetch('http://localhost:3001/user')
+      .then((res) => res.json())
+      .then((data) => {
+        if (username === data.username && password === data.password) {
+          setUser(data);
+          return { success: true };
+        } else {
+          return { success: false, message: 'Invalid username or password.' };
+        }
+      })
+      .catch((err) => {
+        console.error('Login error:', err);
+        return { success: false, message: 'An error occurred during login.' };
+      });
+  };
+
+  const register = (username, password) => {
+    const newUser = {
+      username,
+      password,
+      contribution: {
+        questionsAsked: 0,
+        answersGiven: 0,
+        upvotesReceived: 0
+      },
+      favorite: []
+    };
+
+    return fetch('http://localhost:3001/user', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data);
+        return { success: true };
+      })
+      .catch((err) => {
+        console.error('Registration error:', err);
+        return { success: false, message: 'An error occurred during registration.' };
+      });
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        questions,
+        addQuestion,
+        user,
+        login,
+        register,
+        logout
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};

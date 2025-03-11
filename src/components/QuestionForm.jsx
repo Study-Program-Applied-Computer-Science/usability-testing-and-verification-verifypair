@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { QuestionsContext } from './QuestionsContext';
+import { AppContext } from './AppContext';
 
 const QuestionForm = () => {
-    const { addQuestion } = useContext(QuestionsContext);
+    const { addQuestion } = useContext(AppContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
