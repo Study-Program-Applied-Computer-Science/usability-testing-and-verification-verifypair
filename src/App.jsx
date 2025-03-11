@@ -16,28 +16,19 @@ function App() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<>TEst</>} />
+            <Route path="/" element={<>Test</>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/answer" element={<Answer />} />
             <Route path="/posts" element={<QuestionsList />} />
             <Route path="/ask" element={<QuestionForm />} />
+            <Route path="/badges" element={<BadgeReputation />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
         </Layout>
-      </BrowserRouter >
+      </BrowserRouter>
     </QuestionsProvider>
-  )
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<>Test</>} />
-          <Route path="/answer" element={<Answer />} />
-          <Route path="/badges" element={<BadgeReputation />} />
-          <Route path="/favorites" element={<Favorites />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
   );
 }
 
-export default App
+export default App;
