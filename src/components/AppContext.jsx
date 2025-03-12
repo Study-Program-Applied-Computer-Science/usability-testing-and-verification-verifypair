@@ -5,7 +5,6 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const [questions, setQuestions] = useState([]);
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -38,6 +37,7 @@ export const AppProvider = ({ children }) => {
         if (validUser.length > 0) {
           setUser(validUser[0]);
           localStorage.setItem('user', validUser[0].id);
+          localStorage.setItem('username', validUser[0].username);
           return { success: true };
         } else {
           return { success: false, message: 'Invalid username or password.' };
@@ -51,6 +51,7 @@ export const AppProvider = ({ children }) => {
 
   const register = (username, password) => {
     const newUser = {
+      id: String(Date.now()),
       username,
       password,
       contribution: {
@@ -62,7 +63,7 @@ export const AppProvider = ({ children }) => {
     };
 
     return fetch('http://localhost:3005/user', {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
 
@@ -7,13 +7,15 @@ const QuestionForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
+    const username = localStorage.getItem('username');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!title.trim() || !description.trim()) return;
 
         const newQuestion = {
-            id: Date.now(),
+            id: String(Date.now()),
+            username: username,
             question_title: title,
             question_description: description,
             answers: [],
