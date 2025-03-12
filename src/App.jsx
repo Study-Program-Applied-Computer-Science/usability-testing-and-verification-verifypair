@@ -1,25 +1,25 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './Layout';
 import Answer from './components/Answer';
 import QuestionsList from './components/QuestionsList';
 import Login from './components/Login';
 import Register from './components/Register';
 import QuestionForm from './components/QuestionForm';
-import { QuestionsProvider } from './components/QuestionsContext';
+import { AppProvider } from './components/AppContext';
 import BadgeReputation from './components/BadgeReputation';
 import Favorites from './components/Favorites';
 
-function App() {
+const App = () => {
   return (
-    <QuestionsProvider>
+    <AppProvider>
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<>Test</>} />
+            <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/answer" element={<Answer />} />
+            <Route path="/answer/:id" element={<Answer />} />
             <Route path="/posts" element={<QuestionsList />} />
             <Route path="/ask" element={<QuestionForm />} />
             <Route path="/badges" element={<BadgeReputation />} />
@@ -27,8 +27,8 @@ function App() {
           </Routes>
         </Layout>
       </BrowserRouter>
-    </QuestionsProvider>
-  );
+    </AppProvider>
+  )
 }
 
 export default App;

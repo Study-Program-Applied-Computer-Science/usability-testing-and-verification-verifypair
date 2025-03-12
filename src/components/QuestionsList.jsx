@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { QuestionsContext } from './QuestionsContext';
-import { getBadge } from './BadgeReputation'; // ✅ Import the badge function
+import { AppContext } from './AppContext';
+import { getBadge } from './BadgeReputation'; 
 
 const QuestionsList = () => {
-  const { questions } = useContext(QuestionsContext);
+  const { questions } = useContext(AppContext);
   const navigate = useNavigate();
   
   // State to track favorited questions
@@ -33,6 +33,24 @@ const QuestionsList = () => {
 
   return (
     <>
+      <div className="container mt-2  min-vh-100" style={{ maxWidth: '800px' }}>
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2>Questions List</h2>
+          <button onClick={formRedirect} className="btn btn-primary">
+            Ask a Question
+          </button>
+        </div>
+        {questions.map((question) => (
+          <div key={question.id} className="card mt-3" style={{ cursor: 'pointer' }} onClick={() => navigate(`/answer/${question.id}`)}>
+            <div className="card-body">
+              <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.question_title}</h4>
+              <p className="card-text" style={{ textAlign: 'justify' }}>
+                {question.question_description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
       <div className="container mt-4" style={{ maxWidth: '800px' }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
             <h2>Questions List</h2>

@@ -1,20 +1,39 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 const Login = () => {
+  const { login } = useContext(AppContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const userId = localStorage.getItem('user');
+    if (userId) {
+      navigate('/posts');
+    }
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setErrorMsg('Please enter both username and password.');
       return;
     }
+    if (password.length < 8) {
+      setErrorMsg('Password must be at least 8 characters long.');
+      return;
+    }
+
     setErrorMsg('');
-    navigate('/questions');
+    const result = await login(username, password);
+    if (result.success) {
+      navigate('/posts');
+    } else {
+      setErrorMsg(result.message);
+    }
   };
 
   return (

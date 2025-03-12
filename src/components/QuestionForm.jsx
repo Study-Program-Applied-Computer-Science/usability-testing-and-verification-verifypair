@@ -1,9 +1,9 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { QuestionsContext } from './QuestionsContext';
+import { AppContext } from './AppContext';
 
 const QuestionForm = () => {
-    const { addQuestion } = useContext(QuestionsContext);
+    const { addQuestion } = useContext(AppContext);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const QuestionForm = () => {
 
         const newQuestion = {
             id: Date.now(),
-            question_title:title,
+            question_title: title,
             question_description: description,
             vote: { upvote: 0, downvote: 0 },
             answers: [],
@@ -27,7 +27,7 @@ const QuestionForm = () => {
     };
 
     return (
-        <div className="container mt-4" style={{ maxWidth: '800px' }}>
+        <div className="container mt-4 min-vh-100" style={{ maxWidth: '800px' }}>
             <h2>Ask a Question</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
