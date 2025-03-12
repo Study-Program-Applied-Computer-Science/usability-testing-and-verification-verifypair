@@ -5,18 +5,18 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const [questions, setQuestions] = useState([]);
-  
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/question')
+    fetch('http://localhost:3005/question')
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch((err) => console.error('Error fetching questions:', err));
   }, []);
 
   const addQuestion = (newQuestion) => {
-    fetch('http://localhost:3001/question', {
+    fetch('http://localhost:3005/question', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -31,11 +31,13 @@ export const AppProvider = ({ children }) => {
   };
 
   const login = (username, password) => {
-    return fetch('http://localhost:3001/user')
+    return fetch('http://localhost:3005/user')
       .then((res) => res.json())
       .then((data) => {
-        if (username === data.username && password === data.password) {
-          setUser(data);
+        const validUser = data.filter((item) => item.username === username && item.password === password)
+        if (validUser.length > 0) {
+          setUser(validUser[0]);
+          localStorage.setItem('user', JSON.stringify(validUser[0].id));
           return { success: true };
         } else {
           return { success: false, message: 'Invalid username or password.' };
@@ -59,7 +61,7 @@ export const AppProvider = ({ children }) => {
       favorite: []
     };
 
-    return fetch('http://localhost:3001/user', {
+    return fetch('http://localhost:3005/user', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
 
@@ -9,16 +9,17 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
-  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  useEffect(() => {
+    const userId = localStorage.getItem('user');
+    if (userId) {
+      navigate('/posts');
+    }
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setErrorMsg('Please enter both username and password.');
-      return;
-    }
-    if (!isValidEmail(username)) {
-      setErrorMsg('Please enter a valid email address.');
       return;
     }
     if (password.length < 8) {
