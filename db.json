@@ -63,8 +63,8 @@
           "answer": "You can start by setting up json-server with a db.json file and then use fetch or axios in your React app to call the endpoints.",
           "vote": {
             "upvote": [
-              1,
-              2
+              2,
+              1
             ],
             "downvote": [
               3
@@ -89,17 +89,10 @@
           "username": "unknown_user",
           "answer": "test feature",
           "vote": {
-            "upvote": [],
-            "downvote": []
-          }
-        },
-        {
-          "id": 4,
-          "username": "johndoe",
-          "answer": "abcd",
-          "vote": {
-            "upvote": [],
-            "downvote": []
+            "upvote": [
+              1
+            ],
+            "downvote": 0
           }
         }
       ]
@@ -130,15 +123,12 @@
       "username": "johndoe",
       "question_title": "test question",
       "question_description": "here is question description",
-      "vote": {
-        "upvote": [],
-        "downvote": []
-      },
+      "username": "johndoe",
       "answers": [
         {
           "id": 1,
+          "answer": "edit test for ",
           "username": "johndoe",
-          "answer": "test question",
           "vote": {
             "upvote": [],
             "downvote": []
@@ -148,43 +138,7 @@
           "id": 2,
           "username": "taneja",
           "answer": "test username",
-          "vote": {
-            "upvote": [],
-            "downvote": []
-          }
-        },
-        {
-          "id": 3,
-          "username": "unknown_user",
-          "answer": "NOT PRESENT USERNAME",
-          "vote": {
-            "upvote": [],
-            "downvote": []
-          }
-        },
-        {
-          "id": 4,
-          "answer": "tester",
-          "vote": {
-            "upvote": 0,
-            "downvote": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": "1741795496008",
-      "question_title": "Orange?",
-      "question_description": "Orange",
-      "vote": {
-        "upvote": 0,
-        "downvote": 0
-      },
-      "answers": [
-        {
-          "id": 1,
-          "username": "johndoe",
-          "answer": "orange",
+          "username": "",
           "vote": {
             "upvote": [],
             "downvote": []

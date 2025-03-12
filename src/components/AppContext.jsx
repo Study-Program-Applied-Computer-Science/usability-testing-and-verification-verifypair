@@ -54,12 +54,10 @@ export const AppProvider = ({ children }) => {
     return fetch("http://localhost:3005/user")
       .then((res) => res.json())
       .then((data) => {
-        const validUser = data.find(
-          (item) => item.username === username && item.password === password
-        );
-        if (validUser) {
-          setUser(validUser);
-          localStorage.setItem("user", JSON.stringify(validUser));
+        const validUser = data.filter((item) => item.username === username && item.password === password)
+        if (validUser.length > 0) {
+          setUser(validUser[0]);
+          localStorage.setItem('user', validUser[0].id);
           return { success: true };
         } else {
           return { success: false, message: "Invalid username or password." };
