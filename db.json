@@ -61,8 +61,8 @@
           "answer": "You can start by setting up json-server with a db.json file and then use fetch or axios in your React app to call the endpoints.",
           "vote": {
             "upvote": [
-              1,
-              2
+              2,
+              1
             ],
             "downvote": [
               3
@@ -86,7 +86,9 @@
           "id": 3,
           "answer": "test feature",
           "vote": {
-            "upvote": 0,
+            "upvote": [
+              1
+            ],
             "downvote": 0
           }
         }
@@ -117,37 +119,27 @@
       "id": "1741740334083",
       "question_title": "test question",
       "question_description": "here is question description",
-      "vote": {
-        "upvote": 0,
-        "downvote": 0
-      },
+      "username": "johndoe",
       "answers": [
         {
           "id": 1,
-          "answer": "test quesion\n",
+          "answer": "edit test for ",
+          "username": "johndoe",
           "vote": {
-            "upvote": 0,
-            "downvote": 0
+            "upvote": [],
+            "downvote": []
           }
         },
         {
           "id": 2,
           "answer": "test username",
+          "username": "",
           "vote": {
-            "upvote": 0,
-            "downvote": 0
-          }
-        },
-        {
-          "id": 3,
-          "answer": "NOT PRESENT USERNAME\n",
-          "vote": {
-            "upvote": 0,
-            "downvote": 0
+            "upvote": [],
+            "downvote": []
           }
         }
-      ],
-      "username": "johndoe"
+      ]
     }
   ]
 }

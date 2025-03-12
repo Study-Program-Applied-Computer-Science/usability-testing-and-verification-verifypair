@@ -37,7 +37,7 @@ export const AppProvider = ({ children }) => {
         const validUser = data.filter((item) => item.username === username && item.password === password)
         if (validUser.length > 0) {
           setUser(validUser[0]);
-          localStorage.setItem('user', JSON.stringify(validUser[0].id));
+          localStorage.setItem('user', validUser[0].id);
           return { success: true };
         } else {
           return { success: false, message: 'Invalid username or password.' };

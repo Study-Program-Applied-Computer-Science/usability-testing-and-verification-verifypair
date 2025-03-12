@@ -16,7 +16,6 @@ const QuestionForm = () => {
             id: Date.now(),
             question_title: title,
             question_description: description,
-            vote: { upvote: 0, downvote: 0 },
             answers: [],
         };
 
