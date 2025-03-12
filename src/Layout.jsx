@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     return (
         <div className="d-flex flex-column min-vh-100 justify-content-between" style={{ overflowY: "auto" }}>
             <Header />
-            <div className="container my-4 mx-auto min-vh-60">
+            <div className="container my-4 mx-auto ">
                 {children}
             </div>
             <Footer />

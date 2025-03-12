@@ -12,7 +12,7 @@ const QuestionsList = () => {
 
   return (
     <>
-      <div className="container mt-2  min-vh-100" style={{ maxWidth: '800px' }}>
+      <div className="container mt-2  min-vh-60" style={{ maxWidth: '800px' }}>
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h2>Questions List</h2>
           <button onClick={formRedirect} className="btn btn-primary">

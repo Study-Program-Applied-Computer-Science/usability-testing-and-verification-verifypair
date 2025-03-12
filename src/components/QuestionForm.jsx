@@ -28,7 +28,7 @@ const QuestionForm = () => {
     };
 
     return (
-        <div className="container mt-4 min-vh-100" style={{ maxWidth: '800px' }}>
+        <div className="container mt-4 min-vh-60" style={{ maxWidth: '800px' }}>
             <h2>Ask a Question</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">

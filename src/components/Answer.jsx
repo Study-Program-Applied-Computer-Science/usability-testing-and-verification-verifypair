@@ -1,12 +1,11 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AppContext } from './AppContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Answer = () => {
-    const { user } = useContext(AppContext);
     const param = useParams();
     const userID = parseInt(localStorage.getItem('user'));
+    const userName = localStorage.getItem('username');
 
     const navigate = useNavigate();
     const questionId = param.id;
@@ -38,7 +37,7 @@ const Answer = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ answers: [...answers, newAnswer], username: user.username })
+            body: JSON.stringify({ answers: [...answers, newAnswer], username: userName })
         }).then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
@@ -121,7 +120,7 @@ const Answer = () => {
         if (!editText.trim()) return;
 
         const updatedAnswers = answers.map(answer =>
-            answer.id === answerId ? { ...answer, answer: editText, username: user.username } : answer
+            answer.id === answerId ? { ...answer, answer: editText, username: userName } : answer
         );
 
         fetch(`http://localhost:3005/question/${questionId}`, {
