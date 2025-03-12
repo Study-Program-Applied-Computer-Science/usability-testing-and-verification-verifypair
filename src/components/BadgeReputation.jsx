@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "./AppContext";
 
-// Exported getBadge function to be used in other components
+// ✅ Function to determine badge based on upvotes
 export const getBadge = (upvotes) => {
   if (upvotes >= 200) return "💎 Diamond";
   if (upvotes >= 100) return "🏆 Platinum";
@@ -10,28 +11,33 @@ export const getBadge = (upvotes) => {
   return "🚀 Newbie";
 };
 
-function Reputation() {
-  const [user, setUser] = useState({
-    username: "johndoe",
-    upvotesReceived: 20,
-  });
+const BadgeReputation = () => {
+    const { user, questions } = useContext(AppContext);
+    const [totalUpvotes, setTotalUpvotes] = useState(0);
 
-  // This is basically for handling upvotes for when user clicks "upvote" since idk how you did it
-  const handleUpvote = () => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      upvotesReceived: prevUser.upvotesReceived + 1,
-    }));
-  };
+    useEffect(() => {
+        if (user && questions?.length) {  // ✅ Prevents errors if questions are empty
+            let upvotes = 0;
 
-  return (
-    <div className="container mt-4">
-      <h1>Welcome, {user.username}</h1>
-      <p>Reputation: {user.upvotesReceived} upvotes</p>
-      <p>Badge: <span className="badge bg-secondary">{getBadge(user.upvotesReceived)}</span></p>
-      <button className="btn btn-primary" onClick={handleUpvote}>Upvote</button>
-    </div>
-  );
-}
+            questions.forEach(question => {
+                question.answers?.forEach(answer => {  // ✅ Prevents errors if answers are missing
+                    if (answer.username === user.username) {
+                        upvotes += answer.vote?.upvote?.length || 0; // ✅ Ensures no errors if vote array is missing
+                    }
+                });
+            });
 
-export default Reputation;
+            setTotalUpvotes(upvotes);
+        }
+    }, [user, questions]);
+
+    return (
+        <div className="container mt-4 min-vh-100">
+            <h2>Welcome, {user?.username}</h2>
+            <p>Total Reputation: {totalUpvotes} upvotes</p>
+            <p>Badge: <span className="badge bg-secondary">{getBadge(totalUpvotes)}</span></p>
+        </div>
+    );
+};
+
+export default BadgeReputation;

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { getBadge } from './BadgeReputation';
 
 const Answer = () => {
-    const { user } = useContext(AppContext);
+    const { user, updateReputation } = useContext(AppContext); // ✅ Added updateReputation for reputation tracking
     const param = useParams();
     const userID = parseInt(localStorage.getItem('user'));
 
@@ -30,7 +30,7 @@ const Answer = () => {
 
         const newAnswer = {
             id: answers.length ? Math.max(...answers.map(a => a.id)) + 1 : 1,
-            username: user.username, // ✅ Fix: Now includes username
+            username: user.username,
             answer: answerText,
             vote: { upvote: [], downvote: [] }
         };
@@ -66,9 +66,7 @@ const Answer = () => {
 
             if (hasVotedThisType) {
                 updatedVote[voteType] = updatedVote[voteType].filter(id => id !== userID);
-            }
-
-            if (!hasVotedThisType) {
+            } else {
                 updatedVote[voteType] = Array.isArray(updatedVote[voteType])
                     ? [...updatedVote[voteType], userID]
                     : [userID];
@@ -82,11 +80,16 @@ const Answer = () => {
                 ...answer,
                 vote: updatedVote
             };
+
+            if (voteType === 'upvote' && !hasVotedThisType) {
+                updateReputation(answer.username, 1); // ✅ Increase reputation when upvoted
+            } else if (voteType === 'upvote' && hasVotedThisType) {
+                updateReputation(answer.username, -1); // ✅ Decrease reputation when removing an upvote
+            }
         }
         setAnswers(updatedAnswers);
-        updateVote(updatedAnswers)
+        updateVote(updatedAnswers);
     };
-
 
     const updateVote = (updatedAnswers) => {
         fetch(`http://localhost:3005/question/${questionId}`, {
@@ -100,61 +103,7 @@ const Answer = () => {
                 setAnswers(data.answers);
             })
             .catch(err => console.error('Error updating vote:', err));
-    }
-
-    const checkVote = (voteArray) => {
-        if (Array.isArray(voteArray)) {
-            console.log(voteArray, userID, voteArray.includes(userID));
-            return voteArray.includes(userID);
-        }
-
-    }
-
-    const [editingId, setEditingId] = useState(null);
-    const [editText, setEditText] = useState('');
-
-    const handleEdit = (answerId, currentText) => {
-        setEditingId(answerId);
-        setEditText(currentText);
     };
-
-    const handleUpdate = (answerId) => {
-        if (!editText.trim()) return;
-
-        const updatedAnswers = answers.map(answer =>
-            answer.id === answerId ? { ...answer, answer: editText, username: user.username } : answer
-        );
-
-        fetch(`http://localhost:3005/question/${questionId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ answers: updatedAnswers })
-        }).then((res) => res.json())
-            .then((data) => {
-                setAnswers(data.answers);
-                setEditingId(null);
-                setEditText('');
-            })
-            .catch((err) => console.error('Error updating answer:', err));
-    };
-
-    const handleDelete = (answerId) => {
-        const updatedAnswers = answers.filter(answer => answer.id !== answerId);
-
-        fetch(`http://localhost:3005/question/${questionId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ answers: updatedAnswers })
-        }).then((res) => res.json())
-            .then((data) => {
-                setAnswers(data.answers);
-            })
-            .catch((err) => console.error('Error deleting answer:', err));
-    }
 
     const sortedAnswers = [...answers].sort((a, b) => {
         const aUpvotes = Array.isArray(a.vote.upvote) ? a.vote.upvote.length : 0;
@@ -192,68 +141,22 @@ const Answer = () => {
                         <div className="card shadow-sm mb-3" key={item.id}>
                             <div className="card-body">
                                 <div className="row">
-                                    {editingId !== item.id && <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center">
-                                        <div className="d-grid gap-2 col-6 mx-auto">
-                                            <div className="d-flex flex-row  align-items-center justify-content-between mb-2">
-                                                <button className={checkVote(item.vote.upvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'upvote')}>
-                                                    Upvote
-                                                </button>
-                                                {item.vote.upvote.length}
-                                            </div>
-                                            <div className="d-flex flex-row  align-items-center">
-                                                <button className={checkVote(item.vote.downvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'downvote')}>
-                                                    Downvote
-                                                </button>
-                                                {item.vote.downvote.length}
-                                            </div>
-                                        </div>
-                                    </div>}
+                                    <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center">
+                                        <button className="btn btn-light btn-sm" onClick={() => handleVote(item.id, 'upvote')}>
+                                            👍 {item.vote.upvote.length}
+                                        </button>
+                                        <button className="btn btn-light btn-sm" onClick={() => handleVote(item.id, 'downvote')}>
+                                            👎 {item.vote.downvote.length}
+                                        </button>
+                                    </div>
                                     <div className="col-md-11 col-sm-10">
-                                        {editingId === item.id ? (
-                                            <div className="mb-3">
-                                                <textarea
-                                                    className="form-control mb-2 "
-                                                    value={editText}
-                                                    onChange={(e) => setEditText(e.target.value)}
-                                                    rows="4"
-                                                ></textarea>
-                                                <div className="d-flex justify-content-end gap-2">
-                                                    <button
-                                                        className="btn btn-secondary btn-sm"
-                                                        onClick={() => setEditingId(null)}
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                    <button
-                                                        className="btn btn-success btn-sm"
-                                                        onClick={() => handleUpdate(item.id)}
-                                                    >
-                                                        Update
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <div className='d-flex flex-row justify-content-between'>
-                                                    <p className="mb-4 w-100">{item.answer}</p>
-                                                    <button className="btn btn-light btn-sm" onClick={() => handleDelete(item.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-
-                                                <div className="d-flex justify-content-end align-items-center gap-2">
-                                                    <button
-                                                        className="btn btn-light btn-sm"
-                                                        onClick={() => handleEdit(item.id, item.answer)}
-                                                    >
-                                                        <i className="bi bi-pencil me-1"></i> Edit
-                                                    </button>
-                                                    <small className="text-muted">
-                                                        Answered by <span className="fw-bold">{item.username || "Anonymous"}</span>
-                                                    </small>
-                                                </div>
-                                            </>
-                                        )}
+                                        <p className="mb-4 w-100">{item.answer}</p>
+                                        <div className="d-flex justify-content-end align-items-center gap-2">
+                                            <small className="text-muted">
+                                                Answered by <span className="fw-bold">{item.username || "Anonymous"}</span>
+                                                <span className="badge bg-secondary ms-2">{getBadge(item.vote.upvote.length)}</span>
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

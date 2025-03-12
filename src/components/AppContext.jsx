@@ -102,6 +102,25 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  // ✅ Function to update a user's reputation (total upvotes received)
+  const updateReputation = (username, upvoteChange) => {
+    fetch("http://localhost:3005/user")
+      .then((res) => res.json())
+      .then((users) => {
+        const userToUpdate = users.find((u) => u.username === username);
+        if (!userToUpdate) return;
+
+        const updatedReputation = userToUpdate.contribution.upvotesReceived + upvoteChange;
+
+        fetch(`http://localhost:3005/user/${userToUpdate.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contribution: { ...userToUpdate.contribution, upvotesReceived: updatedReputation } }),
+        }).catch((err) => console.error("Error updating reputation:", err));
+      })
+      .catch((err) => console.error("Error fetching users:", err));
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -111,7 +130,8 @@ export const AppProvider = ({ children }) => {
         login,
         register,
         logout,
-        toggleFavorite, // ✅ Now available for use!
+        toggleFavorite, // ✅ Favorites feature remains
+        updateReputation, // ✅ Now available for use!
       }}
     >
       {children}
