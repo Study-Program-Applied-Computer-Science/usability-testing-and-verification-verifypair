@@ -29,7 +29,12 @@ const QuestionForm = () => {
 
     return (
         <div className="container mt-4 min-vh-100" style={{ maxWidth: '800px' }}>
-            <h2>Ask a Question</h2>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2>Ask a Question</h2>
+                <button className="btn btn-outline-primary" onClick={() => navigate(-1)}>
+                    <i className="bi bi-arrow-left me-2"></i> Back to Questions
+                    </button>
+            </div>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label
