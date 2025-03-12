@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from './AppContext';
 
 const QuestionsList = () => {
-  const { questions } = useContext(AppContext);
+  const { questions, deleteQuestion } = useContext(AppContext);
   const navigate = useNavigate();
 
   const formRedirect = () => {
@@ -22,7 +22,11 @@ const QuestionsList = () => {
         {questions.map((question) => (
           <div key={question.id} className="card mt-3" style={{ cursor: 'pointer' }} onClick={() => navigate(`/answer/${question.id}`)}>
             <div className="card-body">
-              <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.question_title}</h4>
+              <div className="d-flex justify-content-between align-items-center">
+                <h4 className="card-title" style={{ textAlign: 'justify' }}>{question.question_title}</h4>
+                <button onClick={(e) => { e.stopPropagation(); deleteQuestion(question.id);}}className="btn btn-danger btn-sm">Delete</button>
+              </div>
+              
               <p className="card-text" style={{ textAlign: 'justify' }}>
                 {question.question_description}
               </p>
