@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
 
-// ✅ Function to determine badge based on upvotes
+
 export const getBadge = (upvotes) => {
   if (upvotes >= 200) return "💎 Diamond";
   if (upvotes >= 100) return "🏆 Platinum";
@@ -16,13 +16,13 @@ const BadgeReputation = () => {
     const [totalUpvotes, setTotalUpvotes] = useState(0);
 
     useEffect(() => {
-        if (user && questions?.length) {  // ✅ Prevents errors if questions are empty
+        if (user && questions?.length) {  
             let upvotes = 0;
 
             questions.forEach(question => {
-                question.answers?.forEach(answer => {  // ✅ Prevents errors if answers are missing
+                question.answers?.forEach(answer => {  
                     if (answer.username === user.username) {
-                        upvotes += answer.vote?.upvote?.length || 0; // ✅ Ensures no errors if vote array is missing
+                        upvotes += answer.vote?.upvote?.length || 0; 
                     }
                 });
             });
@@ -32,11 +32,15 @@ const BadgeReputation = () => {
     }, [user, questions]);
 
     return (
-      <div className="container d-flex flex-column align-items-center justify-content-center min-vh-100">
-        <div className="card shadow-lg p-5 text-center">
-          <h1 className="mb-3">Welcome, <span className="fw-bold">{user?.username}</span></h1>
-          <h2 className="badge bg-secondary p-3 mt-3">{getBadge(totalUpvotes)}</h2>
-          <h3 className="text-primary mt-3">Total Upvotes: <span className="fw-bold">{totalUpvotes}</span></h3>
+      <div className="container d-flex justify-content-center align-items-center min-vh-100">
+        <div className="text-center p-5 border rounded shadow bg-light w-100" style={{ maxWidth: "900px" }}>
+          <h1 className="fw-bold">Welcome, {user?.username || "Guest"}</h1>
+          <hr className="my-3" />
+          <p className="fs-4 text-muted">Reputation Level</p>
+          <p className="display-4 fw-bold">
+            <span className="badge bg-primary p-4">{getBadge(totalUpvotes)}</span>
+          </p>
+          <p className="fs-5">Total Upvotes: <strong>{totalUpvotes}</strong></p>
         </div>
       </div>
     );

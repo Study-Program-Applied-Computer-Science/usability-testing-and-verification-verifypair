@@ -17,21 +17,19 @@ const Header = () => {
             <div className="container justify-content-between">
                 <Link className="navbar-brand" to="/">VerifyPair</Link>
                 
-                {/* Navbar Links */}
+                
                 <div className="d-flex" style={{ color: "white" }} id="navbarNav">
                     <Link className="nav-link mx-3" to="/badges">
-                        <p style={{ margin: 0 }}>Home</p> {/* ✅ Shows Reputation */}
+                        <p style={{ margin: 0 }}>Home</p> 
                     </Link>
                     <Link className="nav-link mx-3" to="/posts">
                         <p style={{ margin: 0 }}>Questions</p>
                     </Link>
 
-                    {/* Show these only if user is logged in */}
+                    {/* When user is logged in */}
                     {checkUserStatus() ? (
                         <>
-                            <Link className="nav-link mx-3" to="/answer">
-                                <p style={{ margin: 0 }}>Answers</p>
-                            </Link>
+                        
                             <Link className="nav-link mx-3" to="/favorites">
                                 <p style={{ margin: 0 }}>Favorites</p>
                             </Link>
@@ -45,7 +43,7 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            {/* Show this only if user is NOT logged in */}
+                            {/* When user is logged out */}
                             <Link className="nav-link mx-3" to="/login">
                                 <p style={{ margin: 0 }}>Login</p>
                             </Link>

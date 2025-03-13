@@ -28,18 +28,18 @@ export const AppProvider = ({ children }) => {
 
   const toggleFavorite = (questionId) => {
     setUser((prevUser) => {
-      if (!prevUser) return prevUser; // Ensure user is logged in
+      if (!prevUser) return prevUser; 
 
       const updatedFavorites = prevUser.favorite.includes(questionId)
-        ? prevUser.favorite.filter((id) => id !== questionId) // Remove if exists
-        : [...prevUser.favorite, questionId]; // Add if not exists
+        ? prevUser.favorite.filter((id) => id !== questionId) 
+        : [...prevUser.favorite, questionId]; 
 
       const updatedUser = { ...prevUser, favorite: updatedFavorites };
 
-      // Update localStorage
+      
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
-      // Update user in database
+      
       fetch(`http://localhost:3005/user/${prevUser.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -104,7 +104,7 @@ export const AppProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  // ✅ Function to update a user's reputation (total upvotes received)
+  
   const updateReputation = (username, upvoteChange) => {
     fetch("http://localhost:3005/user")
       .then((res) => res.json())
@@ -132,8 +132,8 @@ export const AppProvider = ({ children }) => {
         login,
         register,
         logout,
-        toggleFavorite, // ✅ Favorites feature remains
-        updateReputation, // ✅ Now available for use!
+        toggleFavorite, 
+        updateReputation, 
       }}
     >
       {children}
