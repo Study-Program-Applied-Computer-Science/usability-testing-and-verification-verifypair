@@ -13,7 +13,8 @@ const Answer = () => {
     const [answers, setAnswers] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:3005/question/${questionId}`).then((res) => res.json())
+        fetch(`http://localhost:3005/question/${questionId}`)
+            .then((res) => res.json())
             .then((data) => {
                 setContent(data);
                 setAnswers(data.answers);
@@ -22,7 +23,6 @@ const Answer = () => {
     }, [questionId]);
 
     const postAnswer = () => {
-
         const answerText = document.getElementById('answerText').value;
         if (!answerText.trim()) return;
 
@@ -38,14 +38,15 @@ const Answer = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ answers: [...answers, newAnswer], username: userName })
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
             })
             .catch((err) => console.error('Error posting answer:', err));
 
         document.getElementById('answerText').value = '';
-    }
+    };
 
     const handleVote = (id, voteType) => {
         if (!userID) return;
@@ -82,9 +83,8 @@ const Answer = () => {
             };
         }
         setAnswers(updatedAnswers);
-        updateVote(updatedAnswers)
+        updateVote(updatedAnswers);
     };
-
 
     const updateVote = (updatedAnswers) => {
         fetch(`http://localhost:3005/question/${questionId}`, {
@@ -93,20 +93,20 @@ const Answer = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ answers: updatedAnswers })
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
             })
             .catch(err => console.error('Error updating vote:', err));
-    }
+    };
 
     const checkVote = (voteArray) => {
         if (Array.isArray(voteArray)) {
             console.log(voteArray, userID, voteArray.includes(userID));
             return voteArray.includes(userID);
         }
-
-    }
+    };
 
     const [editingId, setEditingId] = useState(null);
     const [editText, setEditText] = useState('');
@@ -129,7 +129,8 @@ const Answer = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ answers: updatedAnswers })
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
                 setEditingId(null);
@@ -147,17 +148,18 @@ const Answer = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ answers: updatedAnswers })
-        }).then((res) => res.json())
+        })
+            .then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
             })
             .catch((err) => console.error('Error deleting answer:', err));
-    }
+    };
 
     const sortedAnswers = [...answers].sort((a, b) => {
         const aUpvotes = Array.isArray(a.vote.upvote) ? a.vote.upvote.length : 0;
         const bUpvotes = Array.isArray(b.vote.upvote) ? b.vote.upvote.length : 0;
-        return bUpvotes - aUpvotes; // Sort in descending order (highest upvotes first)
+        return bUpvotes - aUpvotes;
     });
 
     return (
@@ -167,64 +169,82 @@ const Answer = () => {
                     <button
                         className="btn btn-outline-primary"
                         onClick={() => navigate(-1)}
+                        data-testid="back-button"
                     >
-                        <i className="bi bi-arrow-left me-2"></i> Back to Questions
+                        Back to Questions
                     </button>
                 </div>
                 <div className="card shadow-sm mb-4">
                     <div className="card-header bg-light">
-                        <h2 className="mb-0">{content.question_title}</h2>
+                        <h2 className="mb-0" data-testid="question_title_in_detail">{content.question_title}</h2>
                     </div>
                     <div className="card-body">
-                        <p className="lead" style={{ textAlign: 'justify' }}>{content.question_description}</p>
+                        <p className="lead" style={{ textAlign: 'justify' }} data-testid="question_description">
+                            {content.question_description}
+                        </p>
                         <div className="d-flex justify-content-end">
-                            <small className="text-muted">
+                            <small className="text-muted" data-testid="question-asked-by">
                                 Asked by {content.username || "Anonymous"}
                             </small>
                         </div>
                     </div>
                 </div>
-                <h4 className="mb-3 d-flex justify-content-start">{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}</h4>
+                <h4 className="mb-3 d-flex justify-content-start" data-testid="answers-header">
+                    {answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}
+                </h4>
                 {sortedAnswers && sortedAnswers.length > 0 ? (
                     sortedAnswers.map((item) => (
-                        <div className="card shadow-sm mb-3" key={item.id}>
+                        <div className="card shadow-sm mb-3" key={item.id} data-testid={`answer-card-${item.id}`}>
                             <div className="card-body">
                                 <div className="row">
-                                    {editingId !== item.id && <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center">
-                                        <div className="d-grid gap-2 col-6 mx-auto">
-                                            <div className="d-flex flex-row  align-items-center justify-content-between mb-2">
-                                                <button className={checkVote(item.vote.upvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'upvote')}>
-                                                    Upvote
-                                                </button>
-                                                {item.vote.upvote.length}
-                                            </div>
-                                            <div className="d-flex flex-row  align-items-center">
-                                                <button className={checkVote(item.vote.downvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'downvote')}>
-                                                    Downvote
-                                                </button>
-                                                {item.vote.downvote.length}
+                                    {editingId !== item.id && (
+                                        <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center" data-testid={`vote-section-${item.id}`}>
+                                            <div className="d-grid gap-2 col-6 mx-auto">
+                                                <div className="d-flex flex-row align-items-center justify-content-between mb-2">
+                                                    <button
+                                                        className={checkVote(item.vote.upvote) ? 'btn btn-primary btn-sm' : 'btn btn-light btn-sm'}
+                                                        onClick={() => handleVote(item.id, 'upvote')}
+                                                        data-testid={`upvote-button-${item.id}`}
+                                                    >
+                                                        Upvote
+                                                    </button>
+                                                    <span data-testid={`upvote-count-${item.id}`}>{item.vote.upvote.length}</span>
+                                                </div>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <button
+                                                        className={checkVote(item.vote.downvote) ? 'btn btn-primary btn-sm' : 'btn btn-light btn-sm'}
+                                                        onClick={() => handleVote(item.id, 'downvote')}
+                                                        data-testid={`downvote-button-${item.id}`}
+                                                    >
+                                                        Downvote
+                                                    </button>
+                                                    <span data-testid={`downvote-count-${item.id}`}>{item.vote.downvote.length}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>}
+                                    )}
                                     <div className="col-md-11 col-sm-10">
                                         {editingId === item.id ? (
-                                            <div className="mb-3">
+                                            <div className="mb-3" data-testid={`edit-section-${item.id}`}>
                                                 <textarea
-                                                    className="form-control mb-2 "
+                                                    className="form-control mb-2"
                                                     value={editText}
                                                     onChange={(e) => setEditText(e.target.value)}
                                                     rows="4"
+                                                    data-testid={`edit-textarea-${item.id}`}
                                                 ></textarea>
                                                 <div className="d-flex justify-content-end gap-2">
                                                     <button
                                                         className="btn btn-secondary btn-sm"
                                                         onClick={() => setEditingId(null)}
+                                                        data-testid={`cancel-edit-${item.id}`}
                                                     >
                                                         Cancel
                                                     </button>
                                                     <button
                                                         className="btn btn-success btn-sm"
                                                         onClick={() => handleUpdate(item.id)}
+                                                        data-testid={`update-edit-${item.id}`}
                                                     >
                                                         Update
                                                     </button>
@@ -232,21 +252,27 @@ const Answer = () => {
                                             </div>
                                         ) : (
                                             <>
-                                                <div className='d-flex flex-row justify-content-between'>
-                                                    <p className="mb-4 w-100">{item.answer}</p>
-                                                    <button className="btn btn-light btn-sm" onClick={() => handleDelete(item.id)}>
+                                                <div className="d-flex flex-row justify-content-between">
+                                                    <p className="mb-4 w-100" data-testid={`answer-text-${item.id}`}>
+                                                        {item.answer}
+                                                    </p>
+                                                    <button
+                                                        className="btn btn-light btn-sm"
+                                                        onClick={() => handleDelete(item.id)}
+                                                        data-testid={`delete-button-${item.id}`}
+                                                    >
                                                         Delete
                                                     </button>
                                                 </div>
-
                                                 <div className="d-flex justify-content-end align-items-center gap-2">
                                                     <button
                                                         className="btn btn-light btn-sm"
                                                         onClick={() => handleEdit(item.id, item.answer)}
+                                                        data-testid={`edit-button-${item.id}`}
                                                     >
                                                         <i className="bi bi-pencil me-1"></i> Edit
                                                     </button>
-                                                    <small className="text-muted">
+                                                    <small className="text-muted" data-testid={`answered-by-${item.id}`}>
                                                         Answered by <span className="fw-bold">{item.username || "Anonymous"}</span>
                                                     </small>
                                                 </div>
@@ -258,10 +284,12 @@ const Answer = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="alert alert-secondary">No answers yet. Be the first to answer!</div>
+                    <div className="alert alert-secondary" data-testid="no-answers-alert">
+                        No answers yet. Be the first to answer!
+                    </div>
                 )}
 
-                <div className="card shadow-sm mt-4">
+                <div className="card shadow-sm mt-4" data-testid="post-answer-card">
                     <div className="card-header bg-light">
                         <h3 className="mb-0">Your Answer</h3>
                     </div>
@@ -272,13 +300,13 @@ const Answer = () => {
                                 rows="5"
                                 placeholder="Write your answer here..."
                                 id="answerText"
+                                data-testid="post-answer-textarea"
                             ></textarea>
                         </div>
                         <button
                             className="btn btn-primary mt-3"
-                            onClick={() => {
-                                postAnswer();
-                            }}
+                            onClick={postAnswer}
+                            data-testid="post-answer-button"
                         >
                             <i className="bi bi-send me-2"></i>
                             Post Your Answer
