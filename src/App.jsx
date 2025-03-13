@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Answer from './components/Answer';
 import QuestionsList from './components/QuestionsList';
 import Login from './components/Login';
@@ -12,18 +12,16 @@ import Layout from './Layout';
 const App = () => {
   return (
     <AppProvider>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/answer/:id" element={<Answer />} />
-            <Route path="/posts" element={<QuestionsList />} />
-            <Route path="/ask" element={<QuestionForm />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/answer/:id" element={<Answer />} />
+          <Route path="/posts" element={<QuestionsList />} />
+          <Route path="/ask" element={<QuestionForm />} />
+        </Routes>
+      </Layout>
     </AppProvider>
   )
 }

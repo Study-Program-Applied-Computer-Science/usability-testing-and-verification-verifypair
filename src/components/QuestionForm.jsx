@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
 
@@ -30,55 +30,55 @@ const QuestionForm = () => {
     return (
         <div className="container mt-4 min-vh-100">
             <div className="row justify-content-center">
-            <div className="col-lg-10 col-xl-8">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2 className="h3 mb-3 mb-md-0">Ask a Question</h2>
-                <button className="btn btn-outline-primary" onClick={() => navigate(-1)}>
-                    <i className="bi bi-arrow-left me-2"></i> Back to Questions
-                    </button>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label
-                        htmlFor="title"
-                        className="form-label w-100"
-                        style={{ textAlign: 'justify' }}
-                    >
-                        Question Title
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Enter question title"
-                    />
+                <div className="col-lg-10 col-xl-8">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <h2 className="h3 mb-3 mb-md-0">Ask a Question</h2>
+                        <button className="btn btn-outline-primary" onClick={() => navigate(-1)}>
+                            <i className="bi bi-arrow-left me-2"></i> Back to Questions
+                        </button>
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="title"
+                                className="form-label w-100"
+                                style={{ textAlign: 'justify' }}
+                            >
+                                Question Title
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Enter question title"
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="description"
+                                className="form-label w-100"
+                                style={{ textAlign: 'justify' }}
+                            >
+                                Description
+                            </label>
+                            <textarea
+                                className="form-control"
+                                id="description"
+                                rows="4"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Enter question description"
+                            />
+                        </div>
+                        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" className="btn btn-primary">
+                                Submit Question
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div className="mb-3">
-                    <label
-                        htmlFor="description"
-                        className="form-label w-100"
-                        style={{ textAlign: 'justify' }}
-                    >
-                        Description
-                    </label>
-                    <textarea
-                        className="form-control"
-                        id="description"
-                        rows="4"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Enter question description"
-                    />
-                </div>
-                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" className="btn btn-primary">
-                    Submit Question
-                </button>
-                </div>
-            </form>
-            </div>
             </div>
         </div>
     );
