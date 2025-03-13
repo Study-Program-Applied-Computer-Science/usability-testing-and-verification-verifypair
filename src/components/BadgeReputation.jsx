@@ -29,18 +29,18 @@ const BadgeReputation = () => {
 
             setTotalUpvotes(upvotes);
         }
-    }, [user, questions]);
+    }, [user, questions.length]);
 
     return (
         <div className="container d-flex justify-content-center align-items-center min-vh-100">
             <div className="text-center p-5 border rounded shadow bg-light w-100" style={{ maxWidth: "900px" }}>
-                <h1 className="fw-bold">Welcome, {user?.username || "Guest"}</h1>
+            <h1 className="fw-bold" data-testid="user-welcome">Welcome, {user?.username || "Guest"}</h1>
                 <hr className="my-3" />
                 <p className="fs-4 text-muted">Reputation Level</p>
-                <p className="display-4 fw-bold">
+                <p className="display-4 fw-bold" data-testid="user-badge">
                     <span className="badge bg-primary p-4">{getBadge(totalUpvotes)}</span>
                 </p>
-                <p className="fs-5">Total Upvotes: <strong>{totalUpvotes}</strong></p>
+                <p className="fs-5" data-testid="user-upvotes">Total Upvotes: <strong>{totalUpvotes}</strong></p>
             </div>
         </div>
     );

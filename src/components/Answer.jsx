@@ -30,6 +30,7 @@ const Answer = () => {
         const newAnswer = {
             id: answers.length ? Math.max(...answers.map(a => a.id)) + 1 : 1,
             answer: answerText,
+            username: userName,
             vote: { upvote: [], downvote: [] }
         };
 
@@ -38,7 +39,7 @@ const Answer = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ answers: [...answers, newAnswer], username: userName })
+            body: JSON.stringify({ answers: [...answers, newAnswer] })
         }).then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
