@@ -158,7 +158,7 @@ const Answer = () => {
     const sortedAnswers = [...answers].sort((a, b) => {
         const aUpvotes = Array.isArray(a.vote.upvote) ? a.vote.upvote.length : 0;
         const bUpvotes = Array.isArray(b.vote.upvote) ? b.vote.upvote.length : 0;
-        return bUpvotes - aUpvotes; // Sort in descending order (highest upvotes first)
+        return bUpvotes - aUpvotes;
     });
 
     return (
@@ -169,7 +169,7 @@ const Answer = () => {
                         className="btn btn-outline-primary"
                         onClick={() => navigate(-1)}
                     >
-                        <i className="bi bi-arrow-left me-2"></i> Back to Questions
+                        Back to Questions
                     </button>
                 </div>
                 <div className="card shadow-sm mb-4">
@@ -243,9 +243,10 @@ const Answer = () => {
                                                 <div className="d-flex justify-content-end align-items-center gap-2">
                                                     <button
                                                         className="btn btn-light btn-sm"
+                                                        data-testid={"edit-button"}
                                                         onClick={() => handleEdit(item.id, item.answer)}
                                                     >
-                                                        <i className="bi bi-pencil me-1"></i> Edit
+                                                        Edit
                                                     </button>
                                                     <small className="text-muted" data-testid={`answered-by-${item.id}`}>
                                                         Answered by <span className="fw-bold">{item.username || "Anonymous"}</span>
@@ -284,7 +285,6 @@ const Answer = () => {
                                 postAnswer();
                             }}
                         >
-                            <i className="bi bi-send me-2"></i>
                             Post Your Answer
                         </button>
                     </div>
