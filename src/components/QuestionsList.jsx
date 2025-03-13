@@ -39,11 +39,7 @@ const QuestionsList = () => {
               </div>
             </div>
           </div>
-          </div>
-        ))}
         </div>
-      </div>
-      </div>
       </div>
     </>
   );

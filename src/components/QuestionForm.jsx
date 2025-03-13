@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
 
@@ -55,30 +55,6 @@ const QuestionForm = () => {
                         placeholder="Enter question title"
                     />
                 </div>
-                <div className="mb-3">
-                    <label
-                        htmlFor="description"
-                        className="form-label w-100"
-                        style={{ textAlign: 'justify' }}
-                    >
-                        Description
-                    </label>
-                    <textarea
-                        className="form-control"
-                        id="description"
-                        rows="4"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Enter question description"
-                    />
-                </div>
-                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" className="btn btn-primary">
-                    Submit Question
-                </button>
-                </div>
-            </form>
-            </div>
             </div>
         </div>
     );
