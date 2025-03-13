@@ -57,6 +57,28 @@
         "upvotesReceived": 0
       },
       "favorite": []
+    },
+    {
+      "id": "1741899262497",
+      "username": "manu",
+      "password": "Test@123",
+      "contribution": {
+        "questionsAsked": 0,
+        "answersGiven": 0,
+        "upvotesReceived": 0
+      },
+      "favorite": []
+    },
+    {
+      "id": "1741901206891",
+      "username": "testuser",
+      "password": "testuser123",
+      "contribution": {
+        "questionsAsked": 0,
+        "answersGiven": 0,
+        "upvotesReceived": 0
+      },
+      "favorite": []
     }
   ],
   "question": [

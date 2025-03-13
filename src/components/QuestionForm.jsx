@@ -28,7 +28,7 @@ const QuestionForm = () => {
     };
 
     return (
-        <div className="container mt-4 min-vh-100">
+        <div className="container mt-4 min-vh-60">
             <div className="row justify-content-center">
                 <div className="col-lg-10 col-xl-8">
                     <div className="d-flex justify-content-between align-items-center mb-4">

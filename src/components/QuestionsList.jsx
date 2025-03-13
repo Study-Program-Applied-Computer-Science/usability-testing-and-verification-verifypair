@@ -32,7 +32,7 @@ const QuestionsList = () => {
                   {getBadge(question.upvotes)}
                 </span>
               </h5>
-              <button onClick={(e) => { e.stopPropagation(); deleteQuestion(question.id);}}className="btn btn-danger btn-sm">Delete</button>
+              <button onClick={(e) => { e.stopPropagation(); deleteQuestion(question.id); }} className="btn btn-danger btn-sm">Delete</button>
             </div>
             <h4 className="card-title" style={{ textAlign: "justify" }}>
               {question.question_title}
@@ -55,6 +55,7 @@ const QuestionsList = () => {
 
               <button
                 className="btn btn-outline-primary"
+                data-testid="answer-button"
                 onClick={() => navigate(`/answer/${question.id}`)}
               >
                 ✍ Answer
