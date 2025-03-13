@@ -121,10 +121,7 @@ export const AppProvider = ({ children }) => {
         : [...prevUser.favorite, questionId];
 
       const updatedUser = { ...prevUser, favorite: updatedFavorites };
-
-
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-
+      localStorage.setItem("user", updatedUser.id);
 
       fetch(`http://localhost:3005/user/${prevUser.id}`, {
         method: "PATCH",
