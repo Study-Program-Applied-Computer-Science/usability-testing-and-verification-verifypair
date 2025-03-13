@@ -32,12 +32,15 @@ const BadgeReputation = () => {
     }, [user, questions]);
 
     return (
-        <div className="container mt-4 min-vh-100">
-            <h2>Welcome, {user?.username}</h2>
-            <p>Total Reputation: {totalUpvotes} upvotes</p>
-            <p>Badge: <span className="badge bg-secondary">{getBadge(totalUpvotes)}</span></p>
+      <div className="container d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <div className="card shadow-lg p-5 text-center">
+          <h1 className="mb-3">Welcome, <span className="fw-bold">{user?.username}</span></h1>
+          <h2 className="badge bg-secondary p-3 mt-3">{getBadge(totalUpvotes)}</h2>
+          <h3 className="text-primary mt-3">Total Upvotes: <span className="fw-bold">{totalUpvotes}</span></h3>
         </div>
+      </div>
     );
+    
 };
 
 export default BadgeReputation;
