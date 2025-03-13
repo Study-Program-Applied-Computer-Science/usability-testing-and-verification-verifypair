@@ -30,35 +30,39 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Register</h2>
-      {errorMsg && <p className="text-danger">{errorMsg}</p>}
-      <form onSubmit={handleSubmit} data-testid="register-form">
-        <div className="mb-3">
-          <input
-            type="text"
-            className="form-control w-25 mx-auto"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            data-testid="username-input"
-          />
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-8 col-lg-6 col-xl-4">
+          <h2 className="mb-4 text-center">Register</h2>
+          {errorMsg && <p className="text-danger">{errorMsg}</p>}
+          <form onSubmit={handleSubmit} data-testid="register-form">
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                data-testid="username-input"
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                data-testid="password-input"
+              />
+            </div>
+            <button type="submit" className="btn btn-success">Register</button>
+          </form>
+          <p className="mt-3">
+            Already have an account? <Link to="/login">Login here</Link>.
+          </p>
         </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control w-25 mx-auto"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            data-testid="password-input"
-          />
-        </div>
-        <button type="submit" className="btn btn-success">Register</button>
-      </form>
-      <p className="mt-3">
-        Already have an account? <Link to="/login">Login here</Link>.
-      </p>
+      </div>
     </div>
   );
 };
