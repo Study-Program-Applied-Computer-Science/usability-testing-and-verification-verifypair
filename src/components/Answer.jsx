@@ -174,12 +174,12 @@ const Answer = () => {
                 </div>
                 <div className="card shadow-sm mb-4">
                     <div className="card-header bg-light">
-                        <h2 className="mb-0">{content.question_title}</h2>
+                        <h2 className="mb-0" data-testid="question_title_in_detail">{content.question_title}</h2>
                     </div>
                     <div className="card-body">
                         <p className="lead" style={{ textAlign: 'justify' }}>{content.question_description}</p>
                         <div className="d-flex justify-content-end">
-                            <small className="text-muted">
+                            <small className="text-muted" data-testid="question-asked-by">
                                 Asked by {content.username || "Anonymous"}
                             </small>
                         </div>
@@ -188,7 +188,7 @@ const Answer = () => {
                 <h4 className="mb-3 d-flex justify-content-start">{answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}</h4>
                 {sortedAnswers && sortedAnswers.length > 0 ? (
                     sortedAnswers.map((item) => (
-                        <div className="card shadow-sm mb-3" key={item.id}>
+                        <div className="card shadow-sm mb-3" key={item.id} data-testid={`answer-card-${item.id}`}>
                             <div className="card-body">
                                 <div className="row">
                                     {editingId !== item.id && <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center">
@@ -209,7 +209,7 @@ const Answer = () => {
                                     </div>}
                                     <div className="col-md-11 col-sm-10">
                                         {editingId === item.id ? (
-                                            <div className="mb-3">
+                                            <div className="mb-3" data-testid={`edit-section-${item.id}`}>
                                                 <textarea
                                                     className="form-control mb-2 "
                                                     value={editText}
@@ -234,7 +234,7 @@ const Answer = () => {
                                         ) : (
                                             <>
                                                 <div className='d-flex flex-row justify-content-between'>
-                                                    <p className="mb-4 w-100">{item.answer}</p>
+                                                    <p className="mb-4 w-100" data-testid={`answer-text-${item.id}`}>{item.answer}</p>
                                                     <button className="btn btn-light btn-sm" onClick={() => handleDelete(item.id)}>
                                                         Delete
                                                     </button>
@@ -247,7 +247,7 @@ const Answer = () => {
                                                     >
                                                         <i className="bi bi-pencil me-1"></i> Edit
                                                     </button>
-                                                    <small className="text-muted">
+                                                    <small className="text-muted" data-testid={`answered-by-${item.id}`}>
                                                         Answered by <span className="fw-bold">{item.username || "Anonymous"}</span>
                                                         <span className="badge bg-secondary ms-2">{getBadge(item.vote.upvote.length)}</span>
                                                     </small>
@@ -260,10 +260,10 @@ const Answer = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="alert alert-secondary">No answers yet. Be the first to answer!</div>
+                    <div className="alert alert-secondary" data-testid="no-answers-alert">No answers yet. Be the first to answer!</div>
                 )}
 
-                <div className="card shadow-sm mt-4">
+                <div className="card shadow-sm mt-4" data-testid="post-answer-card">
                     <div className="card-header bg-light">
                         <h3 className="mb-0">Your Answer</h3>
                     </div>
@@ -274,10 +274,12 @@ const Answer = () => {
                                 rows="5"
                                 placeholder="Write your answer here..."
                                 id="answerText"
+                                data-testid="post-answer-textarea"
                             ></textarea>
                         </div>
                         <button
                             className="btn btn-primary mt-3"
+                            data-testid="post-answer-button"
                             onClick={() => {
                                 postAnswer();
                             }}
