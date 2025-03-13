@@ -4,7 +4,7 @@ import { AppContext } from "./AppContext";
 import { getBadge } from "./BadgeReputation";
 
 const QuestionsList = () => {
-  const { questions, user, toggleFavorite } = useContext(AppContext);
+  const { questions, user, toggleFavorite, deleteQuestion } = useContext(AppContext);
   const navigate = useNavigate();
 
   const formRedirect = () => {
@@ -32,6 +32,7 @@ const QuestionsList = () => {
                   {getBadge(question.upvotes)}
                 </span>
               </h5>
+              <button onClick={(e) => { e.stopPropagation(); deleteQuestion(question.id);}}className="btn btn-danger btn-sm">Delete</button>
             </div>
             <h4 className="card-title" style={{ textAlign: "justify" }}>
               {question.question_title}
@@ -52,7 +53,6 @@ const QuestionsList = () => {
                 </button>
               )}
 
-              {/* Answer Button */}
               <button
                 className="btn btn-outline-primary"
                 onClick={() => navigate(`/answer/${question.id}`)}

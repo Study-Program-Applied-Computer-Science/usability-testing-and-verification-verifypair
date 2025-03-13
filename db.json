@@ -46,6 +46,17 @@
         "upvotesReceived": 20
       },
       "favorite": []
+    },
+    {
+      "id": "1741830244527",
+      "username": "dummyuser3",
+      "password": "dummyuser",
+      "contribution": {
+        "questionsAsked": 0,
+        "answersGiven": 0,
+        "upvotesReceived": 0
+      },
+      "favorite": []
     }
   ],
   "question": [
