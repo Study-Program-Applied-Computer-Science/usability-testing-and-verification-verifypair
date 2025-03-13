@@ -29,6 +29,16 @@ export const AppProvider = ({ children }) => {
       .catch((err) => console.error('Error adding question:', err));
   };
 
+  const deleteQuestion = (id) => {
+    fetch(`http://localhost:3005/question/${id}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        setQuestions((prev) => prev.filter((q) => q.id !== id));
+      })
+      .catch((err) => console.error('Error deleting question:', err));
+  };
+
   const login = (username, password) => {
     return fetch('http://localhost:3005/user')
       .then((res) => res.json())
@@ -136,7 +146,8 @@ export const AppProvider = ({ children }) => {
         register,
         logout,
         toggleFavorite,
-        updateReputation
+        updateReputation,
+        deleteQuestion
       }}
     >
       {children}
