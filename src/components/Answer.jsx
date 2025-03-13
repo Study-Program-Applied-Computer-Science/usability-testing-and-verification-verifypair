@@ -192,10 +192,10 @@ const Answer = () => {
                         <div className="card shadow-sm mb-3" key={item.id} data-testid={`answer-card-${item.id}`}>
                             <div className="card-body">
                                 <div className="row">
-                                    {editingId !== item.id && <div className="col-md-1 col-sm-2 d-flex flex-column align-items-center text-center">
+                                    {editingId !== item.id && <div className="col-md-2 col-sm-2 d-flex flex-column align-items-center text-center">
                                         <div className="d-grid gap-2 col-6 mx-auto">
                                             <div className="d-flex flex-row  align-items-center justify-content-between mb-2">
-                                                <button className={checkVote(item.vote.upvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'upvote')}>
+                                                <button className={checkVote(item.vote.upvote) ? `btn btn-primary btn-sm` : `btn btn-light btn-sm`} onClick={() => handleVote(item.id, 'upvote')} data-testid="upvote-button">
                                                     Upvote
                                                 </button>
                                                 {item.vote.upvote.length}
@@ -208,12 +208,13 @@ const Answer = () => {
                                             </div>
                                         </div>
                                     </div>}
-                                    <div className="col-md-11 col-sm-10">
+                                    <div className="col-md-10 col-sm-10 ">
                                         {editingId === item.id ? (
                                             <div className="mb-3" data-testid={`edit-section-${item.id}`}>
                                                 <textarea
                                                     className="form-control mb-2 "
                                                     value={editText}
+                                                    data-testid="edit-textarea-after-click"
                                                     onChange={(e) => setEditText(e.target.value)}
                                                     rows="4"
                                                 ></textarea>
@@ -225,6 +226,7 @@ const Answer = () => {
                                                         Cancel
                                                     </button>
                                                     <button
+                                                        data-testid="update-button-textarea"
                                                         className="btn btn-success btn-sm"
                                                         onClick={() => handleUpdate(item.id)}
                                                     >
@@ -234,9 +236,9 @@ const Answer = () => {
                                             </div>
                                         ) : (
                                             <>
-                                                <div className='d-flex flex-row justify-content-between'>
-                                                    <p className="mb-4 w-100" data-testid={`answer-text-${item.id}`}>{item.answer}</p>
-                                                    <button className="btn btn-light btn-sm" onClick={() => handleDelete(item.id)}>
+                                                <div className='d-flex flex-row justify-content-between '>
+                                                    <p className="mb-4" data-testid={`answer-text-${item.id}`}>{item.answer}</p>
+                                                    <button className="btn btn-light btn-sm" data-testid="delete-button" onClick={() => handleDelete(item.id)}>
                                                         Delete
                                                     </button>
                                                 </div>
@@ -244,7 +246,7 @@ const Answer = () => {
                                                 <div className="d-flex justify-content-end align-items-center gap-2">
                                                     <button
                                                         className="btn btn-light btn-sm"
-                                                        data-testid={"edit-button"}
+                                                        data-testid="edit-button"
                                                         onClick={() => handleEdit(item.id, item.answer)}
                                                     >
                                                         Edit
