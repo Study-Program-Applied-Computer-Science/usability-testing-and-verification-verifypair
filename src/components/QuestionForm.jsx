@@ -55,7 +55,9 @@ const QuestionForm = () => {
                         placeholder="Enter question title"
                     />
                 </div>
+                </form>
             </div>
+        </div>
         </div>
     );
 };
