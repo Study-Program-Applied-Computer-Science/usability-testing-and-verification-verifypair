@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AppContext } from './AppContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getBadge } from './BadgeReputation';
 
@@ -8,6 +7,7 @@ const Answer = () => {
     const { user, updateReputation } = useContext(AppContext); // ✅ Added updateReputation for reputation tracking
     const param = useParams();
     const userID = parseInt(localStorage.getItem('user'));
+    const userName = localStorage.getItem('username');
 
     const navigate = useNavigate();
     const questionId = param.id;
@@ -37,10 +37,11 @@ const Answer = () => {
 
         fetch(`http://localhost:3005/question/${questionId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answers: [...answers, newAnswer] })
-        })
-            .then((res) => res.json())
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers: [...answers, newAnswer], username: userName })
+        }).then((res) => res.json())
             .then((data) => {
                 setAnswers(data.answers);
             })
@@ -103,7 +104,61 @@ const Answer = () => {
                 setAnswers(data.answers);
             })
             .catch(err => console.error('Error updating vote:', err));
+    }
+
+    const checkVote = (voteArray) => {
+        if (Array.isArray(voteArray)) {
+            console.log(voteArray, userID, voteArray.includes(userID));
+            return voteArray.includes(userID);
+        }
+
+    }
+
+    const [editingId, setEditingId] = useState(null);
+    const [editText, setEditText] = useState('');
+
+    const handleEdit = (answerId, currentText) => {
+        setEditingId(answerId);
+        setEditText(currentText);
     };
+
+    const handleUpdate = (answerId) => {
+        if (!editText.trim()) return;
+
+        const updatedAnswers = answers.map(answer =>
+            answer.id === answerId ? { ...answer, answer: editText, username: userName } : answer
+        );
+
+        fetch(`http://localhost:3005/question/${questionId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers: updatedAnswers })
+        }).then((res) => res.json())
+            .then((data) => {
+                setAnswers(data.answers);
+                setEditingId(null);
+                setEditText('');
+            })
+            .catch((err) => console.error('Error updating answer:', err));
+    };
+
+    const handleDelete = (answerId) => {
+        const updatedAnswers = answers.filter(answer => answer.id !== answerId);
+
+        fetch(`http://localhost:3005/question/${questionId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers: updatedAnswers })
+        }).then((res) => res.json())
+            .then((data) => {
+                setAnswers(data.answers);
+            })
+            .catch((err) => console.error('Error deleting answer:', err));
+    }
 
     const sortedAnswers = [...answers].sort((a, b) => {
         const aUpvotes = Array.isArray(a.vote.upvote) ? a.vote.upvote.length : 0;

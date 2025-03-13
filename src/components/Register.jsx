@@ -9,16 +9,10 @@ const Register = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
-  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setErrorMsg('Please fill in both username and password.');
-      return;
-    }
-    if (!isValidEmail(username)) {
-      setErrorMsg('Please enter a valid email address.');
       return;
     }
     if (password.length < 8) {
