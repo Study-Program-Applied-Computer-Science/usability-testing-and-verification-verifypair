@@ -7,7 +7,7 @@
       "contribution": {
         "questionsAsked": 3,
         "answersGiven": 5,
-        "upvotesReceived": 20
+        "upvotesReceived": 3
       },
       "favorite": [
         {
@@ -17,7 +17,10 @@
         {
           "questionId": 3,
           "questionTitle": "Best practices for unit testing with Jest"
-        }
+        },
+        "1741795496008",
+        "2",
+        "1"
       ]
     },
     {
@@ -27,7 +30,7 @@
       "contribution": {
         "questionsAsked": 3,
         "answersGiven": 5,
-        "upvotesReceived": 20
+        "upvotesReceived": 3
       },
       "favorite": [
         {
@@ -43,7 +46,7 @@
       "contribution": {
         "questionsAsked": 3,
         "answersGiven": 5,
-        "upvotesReceived": 20
+        "upvotesReceived": 3
       },
       "favorite": []
     }
@@ -75,7 +78,8 @@
           "answer": "Consider using a proxy in your React development environment to avoid CORS issues when connecting to json-server.",
           "vote": {
             "upvote": [
-              3
+              3,
+              1
             ],
             "downvote": [
               2
@@ -84,12 +88,13 @@
         },
         {
           "id": 3,
+          "username": "unknown_user",
           "answer": "test feature",
           "vote": {
             "upvote": [
               1
             ],
-            "downvote": 0
+            "downvote": []
           }
         }
       ]
@@ -117,9 +122,9 @@
     },
     {
       "id": "1741740334083",
+      "username": "johndoe",
       "question_title": "test question",
       "question_description": "here is question description",
-      "username": "johndoe",
       "answers": [
         {
           "id": 1,
@@ -132,14 +137,33 @@
         },
         {
           "id": 2,
-          "answer": "test username",
           "username": "",
+          "answer": "test username",
           "vote": {
-            "upvote": [],
+            "upvote": [
+              1
+            ],
+            "downvote": []
+          }
+        },
+        {
+          "id": 3,
+          "username": "johndoe",
+          "answer": "Orange",
+          "vote": {
+            "upvote": [
+              1
+            ],
             "downvote": []
           }
         }
       ]
+    },
+    {
+      "id": "1741820792318",
+      "question_title": "Orange",
+      "question_description": "Orange",
+      "answers": []
     }
   ]
 }
