@@ -29,16 +29,6 @@ export const AppProvider = ({ children }) => {
       .catch((err) => console.error('Error adding question:', err));
   };
 
-  const deleteQuestion = (id) => {
-    fetch(`http://localhost:3005/question/${id}`, {
-      method: 'DELETE',
-    })
-      .then(() => {
-        setQuestions((prev) => prev.filter((q) => q.id !== id));
-      })
-      .catch((err) => console.error('Error deleting question:', err));
-  };
-
   const login = (username, password) => {
     return fetch('http://localhost:3005/user')
       .then((res) => res.json())
@@ -94,6 +84,48 @@ export const AppProvider = ({ children }) => {
     setUser(null);
   };
 
+  const updateReputation = (username, upvoteChange) => {
+    fetch("http://localhost:3005/user")
+      .then((res) => res.json())
+      .then((users) => {
+        const userToUpdate = users.find((u) => u.username === username);
+        if (!userToUpdate) return;
+
+        const updatedReputation = userToUpdate.contribution.upvotesReceived + upvoteChange;
+
+        fetch(`http://localhost:3005/user/${userToUpdate.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contribution: { ...userToUpdate.contribution, upvotesReceived: updatedReputation } }),
+        }).catch((err) => console.error("Error updating reputation:", err));
+      })
+      .catch((err) => console.error("Error fetching users:", err));
+  };
+
+  const toggleFavorite = (questionId) => {
+    setUser((prevUser) => {
+      if (!prevUser) return prevUser;
+
+      const updatedFavorites = prevUser.favorite.includes(questionId)
+        ? prevUser.favorite.filter((id) => id !== questionId)
+        : [...prevUser.favorite, questionId];
+
+      const updatedUser = { ...prevUser, favorite: updatedFavorites };
+
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+
+      fetch(`http://localhost:3005/user/${prevUser.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favorite: updatedFavorites }),
+      }).catch((err) => console.error("Error updating favorites:", err));
+
+      return updatedUser;
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -103,7 +135,8 @@ export const AppProvider = ({ children }) => {
         login,
         register,
         logout,
-        deleteQuestion,
+        toggleFavorite,
+        updateReputation
       }}
     >
       {children}
