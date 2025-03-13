@@ -28,9 +28,11 @@ const QuestionForm = () => {
     };
 
     return (
-        <div className="container mt-4 min-vh-100" style={{ maxWidth: '800px' }}>
+        <div className="container mt-4 min-vh-100">
+            <div className="row justify-content-center">
+            <div className="col-lg-10 col-xl-8">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Ask a Question</h2>
+                <h2 className="h3 mb-3 mb-md-0">Ask a Question</h2>
                 <button className="btn btn-outline-primary" onClick={() => navigate(-1)}>
                     <i className="bi bi-arrow-left me-2"></i> Back to Questions
                     </button>
@@ -70,10 +72,14 @@ const QuestionForm = () => {
                         placeholder="Enter question description"
                     />
                 </div>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" className="btn btn-primary">
                     Submit Question
                 </button>
+                </div>
             </form>
+            </div>
+            </div>
         </div>
     );
 };
