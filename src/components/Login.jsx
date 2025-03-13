@@ -61,7 +61,7 @@ const Login = () => {
             data-testid="password-input"
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-primary" data-testid="login_button">Login</button>
       </form>
       <p className="mt-3">
         Don't have an account? <Link to="/register">Register here</Link>.
