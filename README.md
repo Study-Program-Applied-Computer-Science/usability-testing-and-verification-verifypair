@@ -16,7 +16,7 @@
 - **Bookmarks:** Enable saving/favoriting questions.
 
 ## Assignment 1
-- **The test plan document is stored in the "TestPlan" folder of our project's repository**
+- **The test plan document is stored in the "TestPlan" folder of our project's repository** [Folder link](https://github.com/Study-Program-Applied-Computer-Science/usability-testing-and-verification-verifypair/tree/main/TestPlan)
 
 
 ## Assigment 2
