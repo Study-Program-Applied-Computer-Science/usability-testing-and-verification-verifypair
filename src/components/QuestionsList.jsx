@@ -48,6 +48,7 @@ const QuestionsList = () => {
                     : "btn-outline-warning"
                     }`}
                   onClick={() => toggleFavorite(question.id)}
+                  data-testid={`favorite-button-${question.id}`}
                 >
                   {user.favorite.includes(question.id) ? "⭐ Unfavorite" : "☆ Favorite"}
                 </button>

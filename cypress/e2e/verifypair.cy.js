@@ -78,6 +78,49 @@ describe('template spec', () => {
     cy.wait(1500);
     cy.get(`[class="mb-4"]`).should('not.contain', 'This is an edited answer for the question.');
 
-  });
+  }); 
 
+  it('should create a question, favorite it, verify it in favorites, and then unfavorite it', () => {
+    cy.wait(1000);
+
+    cy.contains('Register').click();
+    cy.wait(1000);
+    cy.get('[data-testid="username-input"]').type('user');
+    cy.wait(1000);
+    cy.get('[data-testid="password-input"]').type('user12345');
+    cy.wait(1000);
+    cy.get('[data-testid="register-form"]').submit();
+    cy.wait(1000);
+    cy.get('[data-testid="username-input"]').type('user');
+    cy.wait(1000);
+    cy.get('[data-testid="password-input"]').type('user12345');
+    cy.wait(1000);
+    cy.get('[data-testid="login-form"]').submit();
+    cy.wait(1000);
+    cy.url().should('include', '/posts');
+
+   
+    cy.contains('button', 'Ask a Question').click();
+    cy.wait(1000);
+    cy.get('#title').type('What is Cypress?');
+    cy.wait(1000);
+    cy.get('#description').type('How does Cypress work for end-to-end testing?');
+    cy.wait(1000);
+    cy.get('button[type="submit"]').contains('Submit Question').click();
+    cy.wait(1000);
+    cy.url().should('include', '/posts');
+    cy.get('h4.card-title').contains('What is Cypress?').should('be.visible');
+    cy.wait(1000);
+    cy.get('[data-testid^="favorite-button"]').first().click();
+    cy.wait(1000);
+    cy.get('nav').contains('Favorites').click();
+    cy.url().should('include', '/favorites');
+    cy.wait(1000);
+    cy.get('[data-testid^="favorite-question"]').should('contain', 'What is Cypress?');
+    cy.wait(1000);
+    cy.get('[data-testid^="unfavorite-button"]').should('be.visible');
+    cy.wait(500);
+    cy.get('[data-testid^="unfavorite-button"]').first().click();
+    
+  });
 })
